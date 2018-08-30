@@ -1,0 +1,32 @@
+<ion-content padding class="vertical-align-content" scroll="false">
+  <h1 class="heading">EvidenceMe</h1>
+
+  <ion-list>
+    <ion-item class="list-style">
+      <ion-label floating>Username</ion-label>
+      <ion-input type="text" #username></ion-input>
+    </ion-item>
+  
+    <ion-item class="list-style">
+      <ion-label floating>Password</ion-label>
+      <ion-input type="password" #password></ion-input>
+    </ion-item>    
+  </ion-list>
+      
+  <div padding>
+    <ion-row>
+      <ion-col width-50 style="text-align: right">
+        <button ion-button large (click)="login()">Login</button>
+      </ion-col>
+      <ion-col width-50 style="text-align: left">
+        <button ion-button large (click)="goToSignUpPage()">Sign Up</button>
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <ion-grid>
+    <ion-row justify-content-center align-items-center style="height: 100%">
+      <button ion-button (click)="forgotPassword()">Forgot Password?</button>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,7 @@
+{
+  "name": "EvidenceMe",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

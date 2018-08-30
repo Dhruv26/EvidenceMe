@@ -1,0 +1,2 @@
+//declare var process: { env: { [key: string]: string | undefined; } };
+declare module 'xmlrpc'
