@@ -3,8 +3,8 @@
 
   <ion-list>
     <ion-item class="list-style">
-      <ion-label floating>Username</ion-label>
-      <ion-input type="text" #username></ion-input>
+      <ion-label floating>Email</ion-label>
+      <ion-input type="text" #email></ion-input>
     </ion-item>
   
     <ion-item class="list-style">
@@ -29,4 +29,8 @@
       <button ion-button (click)="forgotPassword()">Forgot Password?</button>
     </ion-row>
   </ion-grid>
+
+  <div *ngIf="wrongPassword">
+    <h3 class="forgotPassword">{{incorrectPasswordMessage}}</h3>
+  </div>
 </ion-content>

@@ -3,8 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SignUpPage } from '../sign-up/sign-up';
 import { TabsPage } from '../tabs/tabs';
 import { Storage } from "@ionic/storage";
-import { HttpClient, HttpParams } from "@angular/common/http";
-import xmlrpc from 'xmlrpc';
+import { DataProvider } from '../../providers/data/data';
+import { ForgotPasswordPage } from '../forgot-password/forgot-password';
 
 
 /**
@@ -21,37 +21,43 @@ import xmlrpc from 'xmlrpc';
 })
 export class LoginPage {
 
-  @ViewChild('username') username;
+  @ViewChild('email') email;
   @ViewChild('password') password;
 
   client: any;
+  wrongPassword: boolean;
+  incorrectPasswordMessage: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public httpClient: HttpClient) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              public storage: Storage, public dataProvider: DataProvider) {
   }
 
   ionViewDidLoad() {
 
   }
 
-  login() {
-    console.log(this.username.value, this.password.value);
-    let data = new HttpParams() 
-                .append('username', this.username.value)
-                .append('password', this.password.value);
-    this.httpClient.post('http://localhost:5000/login', data).subscribe((data) => {console.log(data);}, (error) => {console.log(error);});
-    //this.navCtrl.setRoot(TabsPage);
+  ionViewWillEnter() {
+    this.wrongPassword = false;
   }
 
-  authenticate() {
-    this.client.methodCall('Authenticate', [this.username.value, this.password.value],
-    function (error, value) {
-      console.log('Error: ' + error);
-      console.log('Value: ' + value);
+  login() {
+    console.log(this.email.value, this.password.value);
+    this.dataProvider.login(this.email.value, this.password.value).then((result) => {
+      console.log(result);
+      if(result.error_msg == '') {
+        console.log(result.value.userid)
+        this.navCtrl.setRoot(TabsPage);
+      }
+      else {
+        console.log(result.error_msg);
+        this.incorrectPasswordMessage = result.error_msg;
+        this.wrongPassword = true;
+      }
     });
   }
 
   storeUserInfo() {
-    this.storage.set('username', this.username.value);
+    this.storage.set('email', this.email.value);
     this.storage.set('client', this.client);
   }
 
@@ -60,8 +66,6 @@ export class LoginPage {
   }
 
   forgotPassword() {
-    this.httpClient.get('http://localhost:5000').subscribe(data => {
-      console.log(data);
-    });
+    this.navCtrl.push(ForgotPasswordPage);
   }
 }

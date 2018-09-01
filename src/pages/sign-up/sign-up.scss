@@ -4,4 +4,10 @@ page-sign-up {
     border-color: rgba(0, 0, 0, 0) !important;
     color: white;
   }
+  .centerText{
+    text-align: center !important;
+    font-size: 125%;
+    margin-top: 5% !important;
+    color: color($colors, danger);
+  }
 }

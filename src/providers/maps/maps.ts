@@ -30,9 +30,10 @@ export class MapsProvider {
     this.map = new google.maps.Map(element.nativeElement, options);
   }
 
-  placeMarker(location) {
+  placeMarker(location, icon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png') {
     let latLng = new google.maps.LatLng(location.latitude, location.longitude);
     let marker = new google.maps.Marker({
+      icon: icon,
       map: this.map,
       animation: google.maps.Animation.DROP,
       position: latLng

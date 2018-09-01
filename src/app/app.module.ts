@@ -16,9 +16,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from "@ionic-native/geolocation";
 import { IonicStorageModule } from "@ionic/storage";
 import { HttpClientModule } from "@angular/common/http";
-import xmlrpc from 'xmlrpc';
 
 import { MapsProvider } from '../providers/maps/maps';
+import { DataProvider } from '../providers/data/data';
+import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { MapsProvider } from '../providers/maps/maps';
     HomePage,
     LoginPage,
     SignUpPage,
+    ForgotPasswordPage,
     ReportsPage,
     CreateReportPage,
     SettingsPage,
@@ -43,6 +45,7 @@ import { MapsProvider } from '../providers/maps/maps';
     HomePage,
     LoginPage,
     SignUpPage,
+    ForgotPasswordPage,
     ReportsPage,
     CreateReportPage,
     SettingsPage,
@@ -53,7 +56,8 @@ import { MapsProvider } from '../providers/maps/maps';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     MapsProvider,
-    Geolocation
+    Geolocation,
+    DataProvider
   ]
 })
 export class AppModule {}

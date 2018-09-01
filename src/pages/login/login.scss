@@ -3,12 +3,18 @@ page-login {
     text-align: center !important;
     font-size: 250%;
     color: color($colors, primary);
-    margin-top: 35% !important;
+    margin-top: 30% !important;
   }
   .list-style{
     background-color: rgba(0, 0, 0, 0) !important;
     border-color: rgba(0, 0, 0, 0) !important;
     color: white;
+  }
+  .forgotPassword{
+    text-align: center !important;
+    font-size: 100%;
+    margin-top: 10% !important;
+    color: color($colors, danger);
   }
   .vertical-align-content{
     //display: flex !important;
