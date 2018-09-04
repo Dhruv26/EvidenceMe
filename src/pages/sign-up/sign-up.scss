@@ -2,12 +2,18 @@ page-sign-up {
   .list-style{
     background-color: rgba(0, 0, 0, 0) !important;
     border-color: rgba(0, 0, 0, 0) !important;
-    color: white;
+    color: black;
   }
   .centerText{
     text-align: center !important;
     font-size: 125%;
     margin-top: 5% !important;
     color: color($colors, danger);
+  }
+  .validator-error{
+    color: color($colors, danger);
+  }
+  .greeting-message{
+    color: color($colors, primary);
   }
 }

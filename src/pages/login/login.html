@@ -1,6 +1,8 @@
 <ion-content padding class="vertical-align-content" scroll="false">
   <h1 class="heading">EvidenceMe</h1>
 
+
+<!--
   <ion-list>
     <ion-item class="list-style">
       <ion-label floating>Email</ion-label>
@@ -29,6 +31,63 @@
       <button ion-button (click)="forgotPassword()">Forgot Password?</button>
     </ion-row>
   </ion-grid>
+-->
+
+  <form [formGroup]="credentialsForm">
+
+    <ion-item class="list-style">
+      <ion-label floating>Email</ion-label>
+      <ion-input [formControl]="credentialsForm.controls['email']"
+          type="email"></ion-input>
+    </ion-item>
+
+    <div *ngIf="!credentialsForm.controls.email.valid &&
+        credentialsForm.controls.email.dirty"
+        class="validator-error">
+      Please enter a valid email.
+    </div>
+
+    <ion-item class="list-style">
+      <ion-label floating>Password</ion-label>
+      <ion-input [formControl]="credentialsForm.controls['password']"
+          type="password"></ion-input>
+    </ion-item>
+
+    <div *ngIf="!credentialsForm.controls.password.valid &&
+        credentialsForm.controls.password.dirty"
+        class="validator-error">
+      Please enter a valid password.
+    </div>
+
+    <div style="margin-top: 5%;">
+      <ion-row class="login-button-container">
+        <ion-col text-center>
+          <button ion-button block color="secondary"
+              [disabled]="!credentialsForm.valid" (click)="login()">
+            Login
+          </button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="sign-in-button-container">
+        <ion-col text-center>
+          <button ion-button block color="secondary"
+              (click)="goToSignUpPage()">
+            Create a New Account
+          </button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col text-center>
+          <button ion-button clear color="secondary"
+              (click)="forgotPassword()">
+            Forgot your password?
+          </button>
+        </ion-col>
+      </ion-row>
+    </div>
+  </form>
 
   <div *ngIf="wrongPassword">
     <h3 class="forgotPassword">{{incorrectPasswordMessage}}</h3>

@@ -13,45 +13,112 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list>
+
+  <h2 class="greeting-message">Please fill in the following details.</h2>
+
+  <form [formGroup]="credentialsForm">
+
     <ion-item class="list-style">
       <ion-label floating>First Name</ion-label>
-      <ion-input type="text" #firstname></ion-input>
+      <ion-input [formControl]="credentialsForm.controls['firstName']"
+          type="text"></ion-input>
     </ion-item>
+
+    <div class="validator-error">
+      <ng-container *ngFor="let validation of validation_messages.firstName" >
+        <div class="error-message" *ngIf="credentialsForm.get('firstName').hasError(validation.type) && (credentialsForm.get('firstName').dirty || credentialsForm.get('firstName').touched)">
+      {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
 
     <ion-item class="list-style">
       <ion-label floating>Last Name</ion-label>
-      <ion-input type="text" #lastname></ion-input>
+      <ion-input [formControl]="credentialsForm.controls['lastName']"
+          type="text"></ion-input>
     </ion-item>
 
+    <div class="validator-error">
+      <ng-container *ngFor="let validation of validation_messages.lastName" >
+        <div class="error-message" *ngIf="credentialsForm.get('lastName').hasError(validation.type) && (credentialsForm.get('lastName').dirty || credentialsForm.get('lastName').touched)">
+      {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
     <ion-item class="list-style">
-      <ion-label floating>Email Address</ion-label>
-      <ion-input type="text" #email></ion-input>
+      <ion-label floating>Email</ion-label>
+      <ion-input [formControl]="credentialsForm.controls['email']"
+          type="email"></ion-input>
     </ion-item>
-  
+
+    <div class="validator-error">
+      <ng-container *ngFor="let validation of validation_messages.email" >
+        <div class="error-message" *ngIf="credentialsForm.get('email').hasError(validation.type) && (credentialsForm.get('email').dirty || credentialsForm.get('email').touched)">
+      {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
     <ion-item class="list-style">
       <ion-label floating>Password</ion-label>
-      <ion-input type="password" #password></ion-input>
+      <ion-input [formControl]="credentialsForm.controls['password']"
+          type="password"></ion-input>
     </ion-item>
+
+    <div class="validator-error">
+      <ng-container *ngFor="let validation of validation_messages.password" >
+        <div class="error-message" *ngIf="credentialsForm.get('password').hasError(validation.type) && (credentialsForm.get('password').dirty || credentialsForm.get('password').touched)">
+      {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
 
     <ion-item class="list-style">
       <ion-label floating>Confirm Password</ion-label>
-      <ion-input type="password" #confirmpassword></ion-input>
+      <ion-input [formControl]="credentialsForm.controls['confirmPassword']"
+          type="password"></ion-input>
     </ion-item>
+
+    <div *ngIf="passwordMismatch" class="validator-error">
+      Passwords do not match.
+    </div>
 
     <ion-item class="list-style">
       <ion-label floating>Phone Number</ion-label>
-      <ion-input type="text" #number></ion-input>
+      <ion-input [formControl]="credentialsForm.controls['phoneNumber']"
+          type="number"></ion-input>
     </ion-item>
+
+    <div class="validator-error">
+      <ng-container *ngFor="let validation of validation_messages.phoneNumber" >
+        <div class="error-message" *ngIf="credentialsForm.get('phoneNumber').hasError(validation.type) && (credentialsForm.get('phoneNumber').dirty || credentialsForm.get('phoneNumber').touched)">
+      {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
 
     <ion-item class="list-style">
       <ion-label floating>City</ion-label>
-      <ion-input type="text" #city></ion-input>
+      <ion-input [formControl]="credentialsForm.controls['city']"
+          type="text"></ion-input>
     </ion-item>
-  </ion-list>
 
-  <button ion-button (click)="signUp()">Sign Up</button>
-  <div *ngIf="passwordMismatch">
-    <h3 class="centerText">Passwords do not match. Try again!</h3>
-  </div>
+    <ion-item>
+      <ion-label>I accept terms and conditions.</ion-label>
+      <ion-checkbox color="danger"
+        formControlName="tncCheckbox"></ion-checkbox>
+    </ion-item>
+
+    <ion-row class="signup-button-container">
+      <ion-col text-center>
+        <button ion-button block color="secondary"
+            [disabled]="!credentialsForm.valid" (click)="signUp()">
+          Sign Up
+        </button>
+      </ion-col>
+    </ion-row>
+
+  </form>
+
 </ion-content>

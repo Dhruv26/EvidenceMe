@@ -65,7 +65,7 @@ export class HomePage {
 
   getAllReportLocations() {
     this.dataProvider.getAllReports().then((result) => {
-      this.placeAllMarkers(result.location);
+      this.placeAllMarkers(result.value);
     }, (error) => {
       console.log(error);
     });

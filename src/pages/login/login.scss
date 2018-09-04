@@ -8,12 +8,15 @@ page-login {
   .list-style{
     background-color: rgba(0, 0, 0, 0) !important;
     border-color: rgba(0, 0, 0, 0) !important;
-    color: white;
+    color: black;
   }
   .forgotPassword{
     text-align: center !important;
     font-size: 100%;
     margin-top: 10% !important;
+    color: color($colors, danger);
+  }
+  .validator-error{
     color: color($colors, danger);
   }
   .vertical-align-content{

@@ -1,10 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SignUpPage } from '../sign-up/sign-up';
 import { TabsPage } from '../tabs/tabs';
 import { Storage } from "@ionic/storage";
 import { DataProvider } from '../../providers/data/data';
 import { ForgotPasswordPage } from '../forgot-password/forgot-password';
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { regexValidators } from "../validators/validators";
 
 
 /**
@@ -21,15 +23,23 @@ import { ForgotPasswordPage } from '../forgot-password/forgot-password';
 })
 export class LoginPage {
 
-  @ViewChild('email') email;
-  @ViewChild('password') password;
-
-  client: any;
   wrongPassword: boolean;
   incorrectPasswordMessage: string;
+  credentialsForm: FormGroup;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public storage: Storage, public dataProvider: DataProvider) {
+              public storage: Storage, public dataProvider: DataProvider,
+              public formBuilder: FormBuilder) {
+    this.credentialsForm = this.formBuilder.group({
+      email: ['', Validators.compose([
+                  Validators.pattern(regexValidators.email),
+                  Validators.required])
+      ],
+      password: ['', Validators.compose([
+                     Validators.pattern(regexValidators.password),
+                     Validators.required])
+                ]
+    });
   }
 
   ionViewDidLoad() {
@@ -41,8 +51,8 @@ export class LoginPage {
   }
 
   login() {
-    console.log(this.email.value, this.password.value);
-    this.dataProvider.login(this.email.value, this.password.value).then((result) => {
+    console.log(this.credentialsForm.value);
+    this.dataProvider.login(this.credentialsForm.value).then((result) => {
       console.log(result);
       if(result.error_msg == '') {
         console.log(result.value.userid)
@@ -57,8 +67,7 @@ export class LoginPage {
   }
 
   storeUserInfo() {
-    this.storage.set('email', this.email.value);
-    this.storage.set('client', this.client);
+
   }
 
   goToSignUpPage() {

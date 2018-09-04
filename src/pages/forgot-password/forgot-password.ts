@@ -1,6 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DataProvider } from '../../providers/data/data';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { regexValidators } from "../validators/validators";
 
 /**
  * Generated class for the ForgotPasswordPage page.
@@ -16,17 +18,39 @@ import { DataProvider } from '../../providers/data/data';
 })
 export class ForgotPasswordPage {
 
-  @ViewChild('email') email;
+  mailSent: boolean;
+  messageToShow: string;
+  credentialsForm: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public dataProvider: DataProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              public dataProvider: DataProvider, public formBuilder: FormBuilder) {
+    this.credentialsForm = this.formBuilder.group({
+      email: ['', Validators.compose([
+                  Validators.pattern(regexValidators.email),
+                  Validators.required])
+      ]
+    });
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ForgotPasswordPage');
   }
 
-  forgot() {
-    this.dataProvider.forgotPassword(this.email);
+  ionViewWillEnter() {
+    this.mailSent = false;
+  }
+
+  forgotPassword() {
+    this.dataProvider.forgotPassword(this.credentialsForm.value).then((result) => {
+      console.log(result);
+      if(result.error_msg == '') {
+        this.mailSent = true;
+        this.messageToShow = result.value;
+      }
+      else {
+        this.messageToShow = 'Error';//result.error_msg;
+      }
+    });
   }
 
 }

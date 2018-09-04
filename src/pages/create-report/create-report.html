@@ -14,5 +14,46 @@
 
 
 <ion-content padding>
+  <h3>Please enter the following details.</h3>
+
+  <form [formGroup]="reportForm">
+
+    <ion-item>
+      <ion-label>Type</ion-label>
+      <ion-select formControlName="type" (ionchange)="onTypeChange()">
+        <ion-option *ngFor="let type of types" [value]="type">{{ type }}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item class="list-style">
+      <ion-label floating>Description</ion-label>
+      <ion-input [formControl]="reportForm.controls['description']"
+          type="text"></ion-input>
+    </ion-item>
+
+    <div *ngIf="!reportForm.controls.description.valid &&
+        reportForm.controls.description.dirty"
+        class="validator-error">
+      Please enter a description.
+    </div>
+
+    <p style="margin-top: 10%;">Choose location:</p>
+    
+    <div *ngIf="!locationChosen"
+        class="validator-error">
+      Please choose a location on the map by clicking on it.
+    </div>
+    
+    <div #map id="map" style="height: 250px;"></div>
+    
+    <ion-row class="signup-button-container">
+      <ion-col text-center>
+        <button ion-button block color="danger"
+            [disabled]="!reportForm.valid" (click)="createReport()">
+          Create Report
+        </button>
+      </ion-col>
+    </ion-row>
+  </form>
 
 </ion-content>

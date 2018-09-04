@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 /*
   Generated class for the DataProvider provider.
@@ -10,7 +11,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class DataProvider {
 
-  baseUrl: string = 'http://3fe0e550.ngrok.io/';
+  baseUrl: string = 'http://localhost:5000/';
 
   constructor(private http: HttpClient) {
   }
@@ -23,9 +24,9 @@ export class DataProvider {
     });
   }
 
-  login(email, password): Promise<any> {
+  login(options): Promise<any> {
     let data = new HttpParams().append('email',
-                                email).append('password', password);
+                                options.email).append('password', options.password);
     return new Promise((resolve, reject) => {
       this.http.post(this.baseUrl + 'login', data).subscribe((result) => {
         resolve(result);
@@ -35,13 +36,13 @@ export class DataProvider {
     });
   }
 
-  signUp(firstname, lastname, email, password, number, city): Promise<any> {
+  signUp(options): Promise<any> {
     var data = new HttpParams().append('firstname',
-                                firstname).append('lastname',
-                                lastname).append('password',
-                                password).append('email',
-                                email).append('phonenum',
-                                number).append('city', city);
+                                options.firstName).append('lastname',
+                                options.lastName).append('password',
+                                options.password).append('email',
+                                options.email).append('phonenum',
+                                options.phoneNumber).append('city', options.city);
     return new Promise((resolve, reject) => {
       this.http.post(this.baseUrl + 'signup', data).subscribe((result) => {
         resolve(result);
@@ -52,9 +53,15 @@ export class DataProvider {
     });
   }
 
-  forgotPassword(email) {
-    var data = new HttpParams().append('email', email);
-    this.http.post(this.baseUrl + 'forgotpassword', data)
+  forgotPassword(options): Promise<any> {
+    var data = new HttpParams().append('email', options.email);
+    return new Promise((resolve, reject) => {
+      this.http.post(this.baseUrl + 'forgotpassword', data).subscribe((result) => {
+        resolve(result);
+      }, (error) => {
+        reject(error);
+      });
+    });
   }
 
   getAllReports(): Promise<any> {
@@ -65,18 +72,15 @@ export class DataProvider {
     });
   }
 
-  createReport(description, location) {
+  createReport(options): Observable<any> {
     let val: any;
     let err: any;
-    var data = new HttpParams().append('desc',
-                                description).append('location',
-                                location);
-    this.http.post(this.baseUrl + 'reports', data).subscribe((data) => {
-      val = data;
-    }, (error) => {
-      err = error;
-    });
-    return {value: val, error: err};
+    var data = new HttpParams().append('description',
+                                options.description).append('latitude',
+                                options.latitude).append('longitude', 
+                                options.longitude).append('type',
+                                options.type);
+    return this.http.post(this.baseUrl + 'reports', data)
   }
 
 }
